@@ -9,6 +9,6 @@
       Title="ServicePage">
 
     <Grid>
-        <Button Content="Go" Height="30" Width="175" BorderBrush="#FFFF9C1A" Background="#FFFF9C1A" Click="Button_Click"></Button>
+        <Button Content="Go"  BorderBrush="#FFFF9C1A" Click="Button_Click"></Button>
     </Grid>
 </Page>
