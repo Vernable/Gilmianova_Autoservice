@@ -16,15 +16,18 @@ using System.Windows.Shapes;
 namespace Gilmianova_Autoservice
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ServicePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ServicePage : Page
     {
-        public MainWindow()
+        public ServicePage()
         {
             InitializeComponent();
-            MainFrame.Navigate(new ServicePage());
-            Manager.MainFrame = MainFrame;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage());
         }
     }
 }

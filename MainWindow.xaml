@@ -16,6 +16,6 @@
         <Image Source="images/service_logo.ico" HorizontalAlignment="Left"> 
         </Image>
         <TextBlock Text="Header" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <Frame Grid.Row="1"> </Frame>
+        <Frame Grid.Row="1" Name="MainFrame"> </Frame>
     </Grid>
 </Window>
