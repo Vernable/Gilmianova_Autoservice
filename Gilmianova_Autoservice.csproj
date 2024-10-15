@@ -178,19 +178,22 @@
     <Resource Include="images\service_logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\service_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="GilmianovaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GilmianovaModel.Context.cs</LastGenOutput>
       <DependentUpon>GilmianovaModel.edmx</DependentUpon>
+      <LastGenOutput>GilmianovaModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="GilmianovaModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GilmianovaModel.edmx</DependentUpon>
       <LastGenOutput>GilmianovaModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

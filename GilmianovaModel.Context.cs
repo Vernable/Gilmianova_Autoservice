@@ -12,17 +12,19 @@ namespace Gilmianova_Autoservice
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class Gilmianova_AutoserviceEntities : DbContext
     {
         private static Gilmianova_AutoserviceEntities _context;
-        public Gilmianova_AutoserviceEntities GetContext()
+        public static Gilmianova_AutoserviceEntities GetContext()
         {
+
             if (_context == null)
+            
                 _context = new Gilmianova_AutoserviceEntities();
-            return _context;
+                return _context;
+            
         }
-    
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

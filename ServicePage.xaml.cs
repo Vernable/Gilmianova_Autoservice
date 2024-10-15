@@ -23,6 +23,8 @@ namespace Gilmianova_Autoservice
         public ServicePage()
         {
             InitializeComponent();
+            var currentServices = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
+            ServiceListView.ItemsSource = currentServices;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
