@@ -23,8 +23,8 @@ namespace Gilmianova_Autoservice
         public ServicePage()
         {
             InitializeComponent();
-            
-           
+
+
             var currentServices = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
             ServiceListView.ItemsSource = currentServices;
             ComboType.SelectedIndex = 0;
@@ -32,7 +32,7 @@ namespace Gilmianova_Autoservice
         }
         private void TBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            UpdateServices();   
+            UpdateServices();
         }
         private void ComboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -48,7 +48,7 @@ namespace Gilmianova_Autoservice
         }
         private void UpdateServices()
         {
-           var currentServices=Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
+            var currentServices = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
             if (ComboType.SelectedIndex == 0)
             {
                 currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 0 && Convert.ToInt32(p.Discount) <= 100)).ToList();
@@ -62,20 +62,20 @@ namespace Gilmianova_Autoservice
             {
                 currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 5 && Convert.ToInt32(p.Discount) < 15)).ToList();
             }
-                if (ComboType.SelectedIndex == 3)
+            if (ComboType.SelectedIndex == 3)
             {
                 currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 15 && Convert.ToInt32(p.Discount) < 30)).ToList();
             }
-                    if (ComboType.SelectedIndex == 4)
+            if (ComboType.SelectedIndex == 4)
             {
                 currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 30 && Convert.ToInt32(p.Discount) < 70)).ToList();
             }
-                        if (ComboType.SelectedIndex == 5)
+            if (ComboType.SelectedIndex == 5)
             {
                 currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 70 && Convert.ToInt32(p.Discount) < 100)).ToList();
             }
-                            ServiceListView.ItemsSource = currentServices;
-           
+            ServiceListView.ItemsSource = currentServices;
+
             currentServices = currentServices.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
             ServiceListView.ItemsSource = currentServices.ToList();
             if (RButtonDown.IsChecked.Value)
@@ -91,5 +91,33 @@ namespace Gilmianova_Autoservice
         {
             Manager.MainFrame.Navigate(new AddEditPage());
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+
+
+        private void EditButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage());
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                Gilmianova_AutoserviceEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                ServiceListView.ItemsSource = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Service));
+        }
     }
 }
+ 
