@@ -30,6 +30,7 @@ namespace Gilmianova_Autoservice
             ComboType.SelectedIndex = 0;
             UpdateServices();
         }
+
         private void TBoxSearch_TextChanged(object sender, EventArgs e)
         {
             UpdateServices();
@@ -51,28 +52,28 @@ namespace Gilmianova_Autoservice
             var currentServices = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
             if (ComboType.SelectedIndex == 0)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 0 && Convert.ToInt32(p.Discount) <= 100)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 0 && Convert.ToInt32(p.DiscountInt) <= 100)).ToList();
             }
             if (ComboType.SelectedIndex == 1)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 0 && Convert.ToInt32(p.Discount) < 5)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 0 && Convert.ToInt32(p.DiscountInt) < 5)).ToList();
 
             }
             if (ComboType.SelectedIndex == 2)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 5 && Convert.ToInt32(p.Discount) < 15)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 5 && Convert.ToInt32(p.DiscountInt) < 15)).ToList();
             }
             if (ComboType.SelectedIndex == 3)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 15 && Convert.ToInt32(p.Discount) < 30)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 15 && Convert.ToInt32(p.DiscountInt) < 30)).ToList();
             }
             if (ComboType.SelectedIndex == 4)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 30 && Convert.ToInt32(p.Discount) < 70)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 30 && Convert.ToInt32(p.DiscountInt) < 70)).ToList();
             }
             if (ComboType.SelectedIndex == 5)
             {
-                currentServices = currentServices.Where(p => (Convert.ToInt32(p.Discount) >= 70 && Convert.ToInt32(p.Discount) < 100)).ToList();
+                currentServices = currentServices.Where(p => (Convert.ToInt32(p.DiscountInt) >= 70 && Convert.ToInt32(p.DiscountInt) < 100)).ToList();
             }
             ServiceListView.ItemsSource = currentServices;
 
@@ -115,9 +116,37 @@ namespace Gilmianova_Autoservice
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Service));
+        }
+        
+       
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var currentService = (sender as Button).DataContext as Service;
+            var currentClientServices=Gilmianova_AutoserviceEntities.GetContext().ClientService.ToList();
+            currentClientServices = currentClientServices.Where(p => p.ServiceID == currentService.ID).ToList();
+            if (currentClientServices.Count != 0)
+                MessageBox.Show("Невозможно выполнить удаление, т.к существуют записи на эту услугу");
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите выполнить удаление? ", "Внимание! ", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Gilmianova_AutoserviceEntities.GetContext().Service.Remove(currentService);
+                        Gilmianova_AutoserviceEntities.GetContext().SaveChanges();
+                        ServiceListView.ItemsSource = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
+                        UpdateServices();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
         }
     }
 }
+
  
