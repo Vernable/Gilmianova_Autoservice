@@ -42,7 +42,7 @@ namespace Gilmianova_Autoservice
 
             if (_currentService.Cost == 0)
                 errors.AppendLine("Укажите название услуги");
-            if (_currentService.Discount < 0 )
+            if (_currentService.DiscountInt < 0 )
                 errors.AppendLine("Укажите скидку");
             if (string.IsNullOrWhiteSpace(_currentService.DurationInSeconds))
                 errors.AppendLine("Укажите длительность услуги.");
