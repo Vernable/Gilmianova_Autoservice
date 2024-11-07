@@ -41,31 +41,39 @@ namespace Gilmianova_Autoservice
                 errors.AppendLine("укажите название услуги.");
 
             if (_currentService.Cost == 0)
-                errors.AppendLine("Укажите название услуги");
+                errors.AppendLine("Укажите стоимость услуги");
             if (_currentService.DiscountInt < 0 )
                 errors.AppendLine("Укажите скидку");
-            if (string.IsNullOrWhiteSpace(_currentService.DurationInSeconds))
-                errors.AppendLine("Укажите длительность услуги.");
+            if (_currentService.DurationInSeconds>0 || _currentService.DurationInSeconds>240)
+                errors.AppendLine("Длительность не может быть больше 240 минут.");
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
                 return;
             }
+            var allServices=Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
+            allServices=allServices.Where(p=>p.Title==_currentService.Title).ToList();
+            if (allServices.Count == 0)
+            {
+                if (_currentService.ID == 0)
+                {
+                    Gilmianova_AutoserviceEntities.GetContext().Service.Add(_currentService);
 
-            if (_currentService.ID== 0)
-            {
-                Gilmianova_AutoserviceEntities.GetContext().Service.Add(_currentService);
-
+                }
+                try
+                {
+                    Gilmianova_AutoserviceEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Информация сохранена");
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
             }
-            try
+            else
             {
-                Gilmianova_AutoserviceEntities.GetContext().SaveChanges();
-                MessageBox.Show("Информация сохранена");
-                Manager.MainFrame.GoBack();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Уже существует такая услуга");
             }
 
         }

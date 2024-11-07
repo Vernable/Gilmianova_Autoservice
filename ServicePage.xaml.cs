@@ -25,10 +25,11 @@ namespace Gilmianova_Autoservice
         int CurrentPage = 0;
         List<Service> CurrentPageList=new List<Service>();
         List<Service> TableList;
+       
         public ServicePage()
         {
             InitializeComponent();
-
+           
 
             var currentServices = Gilmianova_AutoserviceEntities.GetContext().Service.ToList();
             ServiceListView.ItemsSource = currentServices;
@@ -270,6 +271,11 @@ namespace Gilmianova_Autoservice
         private void RightDirButton_Click(object sender, RoutedEventArgs e)
         {
         ChangePage(2, null);
+        }
+
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new SignUpPage((sender as Button).DataContext as Service));
         }
     }
 }

@@ -15,17 +15,15 @@ namespace Gilmianova_Autoservice
     
     public partial class Gilmianova_AutoserviceEntities : DbContext
     {
-        private static Gilmianova_AutoserviceEntities _context;
-        public static Gilmianova_AutoserviceEntities GetContext()
+       private static  Gilmianova_AutoserviceEntities _context;
+            public static Gilmianova_AutoserviceEntities GetContext()
         {
-
-            if (_context == null)
-            
-                _context = new Gilmianova_AutoserviceEntities();
-                return _context;
-            
+            if(_context == null)    
+                _context=new Gilmianova_AutoserviceEntities();
+            return _context;
         }
-    
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
